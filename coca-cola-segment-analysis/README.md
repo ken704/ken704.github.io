@@ -30,3 +30,4 @@ Given the consistency of the Q2 seasonal uplift, Coca-Cola's regional teams coul
 ## Notes on the Data
 - 2025 and 2026 figures reflect Q1–Q2 only (H1), as full-year data was not yet available at the time of analysis. All comparisons involving these years were adjusted to compare like periods (H1 vs. H1) rather than full years vs. partial years.
 - "Corporate" and "Eliminations" reporting lines were excluded from segment comparisons, as they are accounting adjustments rather than operating business segments.
+ ![Excel pivot table](Screenshot2026-09-23061615.png)
