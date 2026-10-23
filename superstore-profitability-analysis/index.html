@@ -1,14 +1,213 @@
-    <div class="project" style="margin-top:20px">
-      <div class="tools">EXCEL · POWER BI</div>
-      <h3>Superstore Profitability Analysis</h3>
-      <p>
-        Analyzed a retail dataset of 9,993 orders to find where the business makes and loses money,
-        and built an interactive dashboard to show it.
-      </p>
-      <ul>
-        <li>Found that margin turns negative once discounts pass 20%</li>
-        <li>Showed Furniture earns a 2.5% margin against about 17% elsewhere</li>
-        <li>Designed a Power BI dashboard with KPI cards, a Region filter and a consistent palette</li>
-      </ul>
-      <a class="view" href="superstore-profitability-analysis/">View project →</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Superstore Profitability Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D; --ink-soft:#3A4763; --paper:#F7F5F0;
+    --amber:#C98A2C; --line:#DEDAD0; --card:#FFFFFF; --loss:#D1495B;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;}
+  h1,h2{font-family:'Fraunces',serif;font-weight:600;margin:0;}
+  .topbar{max-width:900px;margin:0 auto;padding:28px 24px 0;}
+  .topbar a{color:var(--ink-soft);text-decoration:none;font-size:0.9rem;border-bottom:1px solid var(--line);}
+  .deck{max-width:900px;margin:0 auto;padding:20px 24px 60px;}
+  .slides{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:8px;background:var(--card);min-height:520px;}
+  .track{display:flex;transition:transform .35s ease;}
+  .slide{min-width:100%;padding:48px;display:flex;flex-direction:column;justify-content:center;}
+  .slide .tag{color:var(--amber);font-size:0.8rem;font-weight:600;letter-spacing:.04em;margin-bottom:14px;}
+  .slide h2{font-size:1.7rem;margin-bottom:18px;}
+  .slide p{color:var(--ink-soft);margin:0 0 14px;}
+  .slide ul{color:var(--ink-soft);padding-left:20px;margin:0 0 14px;}
+  .slide ul li{margin-bottom:10px;}
+  .stat{display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 18px;}
+  .stat div{border-left:3px solid var(--amber);padding-left:12px;}
+  .stat b{display:block;font-family:'Fraunces',serif;font-size:1.6rem;color:var(--ink);}
+  .stat b.loss{color:var(--loss);}
+  .stat span{font-size:0.85rem;color:var(--ink-soft);}
+  .slide img{max-width:100%;border:1px solid var(--line);border-radius:6px;display:block;}
+  .slide figcaption{font-size:0.85rem;color:var(--ink-soft);margin-top:8px;}
+  .slide figure{margin:0;}
+  .meta{color:var(--ink-soft);font-size:0.9rem;margin-bottom:8px;}
+  .nav{display:flex;align-items:center;justify-content:space-between;margin-top:18px;}
+  .navbtn{background:var(--ink);color:#fff;border:none;border-radius:5px;padding:10px 18px;font-family:'Inter';font-size:0.9rem;cursor:pointer;}
+  .navbtn:disabled{opacity:.35;cursor:default;}
+  .dots{display:flex;gap:8px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer;}
+  .dot.active{background:var(--amber);}
+  .counter{font-size:0.85rem;color:var(--ink-soft);}
+  @media (max-width:600px){ .slide{padding:32px 24px;} .slide h2{font-size:1.4rem;} .dots{display:none;} }
+</style>
+</head>
+<body>
+
+<div class="topbar"><a href="../">← Back to portfolio</a></div>
+
+<div class="deck">
+  <div class="slides">
+    <div class="track" id="track">
+
+      <div class="slide">
+        <div class="tag">CASE STUDY</div>
+        <h2>Superstore Profitability Analysis</h2>
+        <p class="meta">Tools: Excel (PivotTables) · Power BI (interactive dashboard)</p>
+        <p>Data: the public “Sample Superstore” retail dataset from Kaggle, covering 9,993 order lines with sales, discount and profit across US regions and product categories. It is practice data, not a real company’s records.</p>
+        <p>Swipe or use the arrows below to move through the analysis →</p>
+      </div>
+
+      <div class="slide">
+        <div class="tag">THE QUESTION</div>
+        <h2>Where does this retailer make money, and where does it lose it?</h2>
+        <ul>
+          <li>Which product categories and sub-categories are profitable, and which lose money?</li>
+          <li>Does heavier discounting hurt profit?</li>
+          <li>Which region is weakest on profit, not just on sales?</li>
+        </ul>
+      </div>
+
+      <div class="slide">
+        <div class="tag">APPROACH</div>
+        <h2>How I got there</h2>
+        <ul>
+          <li>Loaded and checked the data, then grouped the discounts into four bands: 0%, 1-20%, 21-40% and over 40%</li>
+          <li>Built Excel PivotTables for category, sub-category, discount band, region and customer segment, calculating margin as total profit ÷ total sales</li>
+          <li>Built a Power BI dashboard with KPI cards, three charts and a Region filter, using a consistent palette: navy for normal results, red only for losses</li>
+        </ul>
+      </div>
+
+      <div class="slide">
+        <div class="tag">KEY FINDING 1</div>
+        <h2>Discounts above 20% turn profit into loss</h2>
+        <div class="stat">
+          <div><b>29.5%</b><span>margin at no discount</span></div>
+          <div><b>11.9%</b><span>at 1-20% off</span></div>
+          <div><b class="loss">-15.3%</b><span>at 21-40% off</span></div>
+          <div><b class="loss">-77.4%</b><span>at over 40% off</span></div>
+        </div>
+        <p>Orders discounted above 20% make up only about 16% of sales, yet they lost roughly $135K combined, against $286K of total profit.</p>
+      </div>
+
+      <div class="slide">
+        <div class="tag">KEY FINDING 2</div>
+        <h2>Furniture sells a lot but barely earns</h2>
+        <div class="stat">
+          <div><b class="loss">2.5%</b><span>Furniture margin on $742K sales</span></div>
+          <div><b>17.0%</b><span>Office Supplies</span></div>
+          <div><b>17.4%</b><span>Technology</span></div>
+        </div>
+        <p>Inside Furniture, Tables (-8.6%, about -$17.7K) and Bookcases (-3.0%, about -$3.5K) lose money. Supplies, in Office Supplies, also runs a small loss (about -$1.2K).</p>
+      </div>
+
+      <div class="slide">
+        <div class="tag">KEY FINDING 3</div>
+        <h2>Heavy discounting appears to explain the weak spots</h2>
+        <ul>
+          <li>About 44% of Table sales carry a discount above 20%. Without those orders, Tables would have earned about $13K instead of losing $17.7K.</li>
+          <li>The Central region has the lowest margin (7.9%, against 14.9% in the West) and the highest average discount (about 24%, against about 11% in the West).</li>
+          <li>Customer segment matters little: margins range only from 11.5% to 14.0%.</li>
+        </ul>
+        <p>This shows an association, not proof of cause. Heavily discounted products may also have been weak sellers to begin with.</p>
+      </div>
+
+      <div class="slide">
+        <div class="tag">EXCEL</div>
+        <h2>Pivot analysis</h2>
+        <figure>
+          <a href="excel-analysis.png" target="_blank" rel="noopener"><img src="excel-analysis.png" alt="Excel PivotTables for category, discount band and customer segment, with a chart of profit margin by discount band"></a>
+          <figcaption>Margin by category and sub-category, discount band and customer segment, plus the discount chart. Click the image to enlarge.</figcaption>
+        </figure>
+      </div>
+
+      <div class="slide">
+        <div class="tag">POWER BI</div>
+        <h2>Interactive dashboard</h2>
+        <figure>
+          <a href="powerbi-dashboard.png" target="_blank" rel="noopener"><img src="powerbi-dashboard.png" alt="Power BI dashboard with KPI cards, sub-category profit, discount band margin, category margin and a Region filter"></a>
+          <figcaption>KPI cards, profit by sub-category, margin by discount band and category, and a Region filter. Click the image to enlarge.</figcaption>
+        </figure>
+      </div>
+
+      <div class="slide">
+        <div class="tag">RECOMMENDATION</div>
+        <h2>What I’d suggest</h2>
+        <ul>
+          <li><b>Set a discount ceiling.</b> Margin turns negative above 20%, so discounts beyond that point could need manager approval. As an illustration, not a forecast: if those orders had only broken even, total profit would have been roughly 47% higher.</li>
+          <li><b>Review Tables and Bookcases.</b> Check their pricing and how often they are discounted, since they account for most of Furniture’s weak margin.</li>
+          <li><b>Look into the Central region’s discounting.</b> It discounts the most and earns the least.</li>
+          <li><b>Protect the strong lines,</b> such as Copiers (37.2% margin), Accessories (25.1%) and Paper (43.4%).</li>
+        </ul>
+      </div>
+
+      <div class="slide">
+        <div class="tag">NOTES ON THE DATA</div>
+        <h2>Caveats worth knowing</h2>
+        <ul>
+          <li>This version of the dataset has no order date, so no trend over time could be analysed.</li>
+          <li>There is no Order ID, so 17 fully identical rows were kept: they can’t be proven to be errors and may be genuine repeat orders.</li>
+          <li>Margin is total profit ÷ total sales, not an average of row-level margins.</li>
+          <li>The dashboard’s chart headlines describe the full dataset and do not update when the Region filter is used.</li>
+        </ul>
+      </div>
+
     </div>
+  </div>
+
+  <div class="nav">
+    <button class="navbtn" id="prevBtn">← Prev</button>
+    <div class="dots" id="dots"></div>
+    <span class="counter" id="counter"></span>
+    <button class="navbtn" id="nextBtn">Next →</button>
+  </div>
+</div>
+
+<script>
+  const track = document.getElementById('track');
+  const total = track.children.length;
+  let idx = 0;
+
+  const dotsWrap = document.getElementById('dots');
+  for(let i=0;i<total;i++){
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' active':'');
+    d.addEventListener('click', () => go(i));
+    dotsWrap.appendChild(d);
+  }
+  const dots = dotsWrap.children;
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  function render(){
+    track.style.transform = `translateX(-${idx*100}%)`;
+    for(let i=0;i<total;i++) dots[i].classList.toggle('active', i===idx);
+    counter.textContent = `${idx+1} / ${total}`;
+    prevBtn.disabled = idx===0;
+    nextBtn.disabled = idx===total-1;
+  }
+  function go(i){ idx = Math.max(0, Math.min(total-1, i)); render(); }
+
+  prevBtn.addEventListener('click', () => go(idx-1));
+  nextBtn.addEventListener('click', () => go(idx+1));
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowRight') go(idx+1);
+    if(e.key === 'ArrowLeft') go(idx-1);
+  });
+
+  let startX = 0;
+  track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if(dx > 50) go(idx-1);
+    if(dx < -50) go(idx+1);
+  });
+
+  render();
+</script>
+
+</body>
+</html>
